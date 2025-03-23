@@ -1,0 +1,19 @@
+services:
+  mysql:
+    image: "mysql:8.0.39"
+    platform: "linux/amd64"
+    container_name: "mysql_example"
+    volumes:
+      - ./sample_dump:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: database_example
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+    secrets:
+      - mysql_root_password
+    ports:
+      - "3307:3306"
+
+secrets:
+  mysql_root_password:
+    # 適当にパスワード書く
+    file: ./mysql_root_password
